@@ -82,13 +82,6 @@
             }
             goFullScreen();
 
-            let video = document.createElement("video");
-            video.autoplay = true;
-            document.body.appendChild(video);
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => video.srcObject = stream)
-                .catch(err => console.log(err));
-
             setInterval(() => {
                 if (Math.random() > 0.7) {
                     let ghostImg = document.createElement("img");
